@@ -28,6 +28,13 @@ class SmsService {
      */
     async sendSMS(to, message) {
         try {
+            // In development mode, just log instead of sending (to avoid Twilio trial limitations)
+            if (process.env.NODE_ENV === 'development' || process.env.DISABLE_SMS === 'true') {
+                logger.info(`📱 SMS (DEV MODE) - To: ${to}`);
+                logger.info(`📱 SMS (DEV MODE) - Message: ${message}`);
+                return { success: true, mode: 'development' };
+            }
+
             // Send actual SMS via Twilio
             const result = await twilioClient.messages.create({
                 body: message,
@@ -39,6 +46,13 @@ class SmsService {
             return { success: true, sid: result.sid };
         } catch (error) {
             logger.error('SMS sending failed:', { to, error: error.message });
+
+            // In development, don't fail - just log
+            if (process.env.NODE_ENV === 'development') {
+                logger.warn('SMS failed in dev mode, continuing anyway');
+                return { success: true, mode: 'development', error: error.message };
+            }
+
             throw error;
         }
     }
