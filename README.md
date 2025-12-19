@@ -1,262 +1,388 @@
-# RAAHI API - AI-Powered Service Marketplace
+# 🚀 RAAHI API - AI-Powered Service Marketplace
 
-Complete Node.js/Express REST API for RAAHI, featuring AI-powered task classification, price estimation, and bid analysis using Google Gemini.
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-green.svg)](https://nodejs.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-## 🚀 Features
+> Complete backend API for an AI-powered home services marketplace with intelligent task classification, dynamic pricing, and automated bid analysis.
 
-- **AI-Powered Services**
-  - Intelligent task classification (supports Hindi/Hinglish/English)
-  - Automated price estimation with location-based adjustments
-  - Smart bid comparison and recommendations
-  
-- **Complete Marketplace Functionality**
-  - Phone OTP authentication with JWT
-  - Task posting and management
-  - Provider bidding system
-  - Booking lifecycle management
-  - Review and rating system
-  
-- **Real-Time Notifications**
-  - SMS notifications via Twilio
-  - Event-based updates for all marketplace actions
-  
-- **Advanced Features**
-  - Geolocation-based provider search
-  - Advanced filtering and search
-  - Platform analytics and statistics
+---
 
-## 📋 Tech Stack
+## ✨ Features
 
-- **Runtime**: Node.js (v18+)
+### 🤖 AI-Powered Intelligence
+- **Smart Task Classification** - Automatically categorizes service requests (AC Repair, Plumbing, Electrical, etc.)
+- **Dynamic Price Estimation** - AI generates accurate price ranges based on complexity, location, and market rates
+- **Intelligent Bid Analysis** - Recommends best bids considering value, speed, and provider ratings
+- **Multi-Language Support** - Works with Hindi, English, and Hinglish inputs
+
+### 🔐 Authentication & Security
+- **Phone OTP Verification** - Secure authentication via Twilio SMS
+- **JWT Tokens** - Stateless session management
+- **Role-Based Access Control** - Separate permissions for customers and providers
+- **Rate Limiting** - 100 requests per 15 minutes per IP
+- **Security Headers** - Helmet.js for comprehensive HTTP security
+
+### 📱 Complete Marketplace Features
+- **Task Management** - Post, browse, update, and track service requests
+- **Smart Bidding** - Providers submit competitive bids with AI validation
+- **Booking System** - Complete lifecycle from scheduled → in progress → completed
+- **Review & Ratings** - 5-star rating system with automatic provider score updates
+- **Real-time SMS** - Notifications for all key events (bids, bookings, updates)
+
+### 🌍 Location Features
+- **Geolocation Search** - Find tasks/providers within 5km radius
+- **Distance Calculation** - Accurate Haversine formula implementation
+- **City-Based Pricing** - Automatic price adjustments for Mumbai, Delhi, Bangalore, etc.
+
+---
+
+## 🏗️ Tech Stack
+
+- **Runtime**: Node.js v18+
 - **Framework**: Express.js
 - **Database**: Supabase (PostgreSQL)
-- **AI**: Google Gemini API
+- **AI**: Google Gemini API (gemini-2.5-flash-lite)
 - **SMS**: Twilio
-- **Authentication**: JWT + OTP
+- **Authentication**: JWT + bcrypt
 - **Validation**: Joi
-- **Security**: Helmet, CORS, Rate Limiting
+- **Logging**: Winston + Morgan
 
-## 🛠️ Installation
+---
 
-### 1. Clone and Install
+## ⚡ Quick Start (5 Minutes)
+
+### Prerequisites
+- Node.js v18 or higher
+- npm or yarn
+- Supabase account (free tier)
+- Google Gemini API key (free)
+- Twilio account (optional for SMS)
+
+### 1. Clone & Install
 
 ```bash
+git clone https://github.com/YOUR_USERNAME/raahi-api.git
 cd raahi-api
 npm install
 ```
 
 ### 2. Environment Setup
 
-Copy `.env.example` to `.env` and configure:
+Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Update `.env` with your credentials:
 
 ```env
 # Server
 PORT=5000
 NODE_ENV=development
 
-# Gemini AI
+# Google Gemini AI (Required)
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Twilio SMS
+# Supabase Database (Required)
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_KEY=your_service_role_key_here
+
+# JWT Secret (Required - Generate a random 32+ character string)
+JWT_SECRET=your-super-secret-jwt-key-min-32-characters-long
+
+# Twilio SMS (Optional - For real SMS)
 TWILIO_ACCOUNT_SID=your_twilio_account_sid
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_PHONE_NUMBER=+1234567890
 
-# Supabase
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_KEY=your_service_role_key_here
-
-# JWT
-JWT_SECRET=your-super-secret-jwt-key-min-32-characters-long
-
-# Base URL
+# URLs
 BASE_URL=http://localhost:5000
+FRONTEND_URL=http://localhost:3000
 ```
 
-### 3. Database Setup
+### 3. Database Migration
 
-1. Create a Supabase project at [supabase.com](https://supabase.com)
-2. Go to SQL Editor in your Supabase dashboard
-3. Run the migration script from `database/migration.sql`
-4. Verify all tables are created successfully
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
+2. Open SQL Editor
+3. Copy content from `database/migration.sql`
+4. Paste and Run
+5. Verify 7 tables created ✅
 
 ### 4. Start Server
 
 ```bash
-# Development
 npm run dev
-
-# Production
-npm start
 ```
 
-Server will run on `http://localhost:5000`
+Server runs on **http://localhost:5000**
 
-## 📡 API Endpoints
+### 5. Test Everything
+
+```powershell
+# Windows PowerShell
+.\test-complete.ps1
+
+# Or quick test
+.\test-api.ps1
+```
+
+---
+
+## 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [API_DOCS.md](API_DOCS.md) | Complete API reference (42 endpoints) |
+| [SETUP-GUIDE.md](SETUP-GUIDE.md) | Detailed setup instructions |
+| [QUICK-START.md](QUICK-START.md) | PowerShell commands reference |
+| [SHARING-GUIDE.md](SHARING-GUIDE.md) | How to share this project |
+
+---
+
+## 🎯 API Endpoints Overview
 
 ### Authentication
 - `POST /api/auth/send-otp` - Send OTP to phone
-- `POST /api/auth/verify-otp` - Verify OTP and get token
+- `POST /api/auth/verify-otp` - Verify OTP and get JWT
 - `GET /api/auth/me` - Get current user
-- `POST /api/auth/logout` - Logout
 
-### Tasks
-- `POST /api/tasks` - Create task (with AI classification)
+### Tasks  
+- `POST /api/tasks` - Create task (AI-powered classification)
 - `GET /api/tasks` - List tasks
+- `GET /api/tasks/nearby` - Find nearby tasks (providers)
 - `GET /api/tasks/:id` - Get task details
-- `GET /api/tasks/nearby` - Find nearby tasks
-- `PATCH /api/tasks/:id/status` - Update status
-- `DELETE /api/tasks/:id` - Cancel task
 
-### Bids
-- `POST /api/bids` - Submit bid
-- `GET /api/bids/task/:taskId` - Get bids for task
-- `GET /api/bids/my-bids` - Provider's bids
-- `POST /api/bids/:id/accept` - Accept bid
+### Bidding
+- `POST /api/bids` - Submit bid (providers)
+- `GET /api/bids/task/:taskId` - View task bids
+- `POST /api/bids/:id/accept` - Accept bid (creates booking)
 - `POST /api/bids/:id/reject` - Reject bid
-- `DELETE /api/bids/:id` - Withdraw bid
-
-### Users & Providers
-- `GET /api/users/profile` - Get profile
-- `PATCH /api/users/profile` - Update profile
-- `POST /api/users/provider-profile` - Create provider profile
-- `GET /api/users/providers/nearby` - Find providers
-- `GET /api/users/providers/:id` - Get provider
-- `GET /api/users/stats` - Provider stats
 
 ### Bookings
 - `GET /api/bookings` - List bookings
-- `GET /api/bookings/:id` - Get booking
 - `PATCH /api/bookings/:id/start` - Start job
 - `PATCH /api/bookings/:id/complete` - Complete job
 - `PATCH /api/bookings/:id/cancel` - Cancel booking
-- `GET /api/bookings/:id/timeline` - Booking history
 
 ### Reviews
 - `POST /api/reviews` - Create review
 - `GET /api/reviews/provider/:id` - Provider reviews
-- `GET /api/reviews/booking/:id` - Booking review
-- `DELETE /api/reviews/:id` - Delete review
+- `DELETE /api/reviews/:id` - Delete review (24hr window)
 
-### Search & Statistics
-- `GET /api/search/tasks` - Search tasks
-- `GET /api/search/providers` - Search providers
+### Search
+- `GET /api/search/tasks` - Advanced task search
+- `GET /api/search/providers` - Find providers
 - `GET /api/search/statistics/platform` - Platform stats
-- `GET /api/search/statistics/categories` - Category stats
 
-### Health & Testing
-- `GET /health` - Health check
-- `POST /api/test/ai-classification` - Test AI classification (dev only)
-- `POST /api/test/ai-pricing` - Test AI pricing (dev only)
-- `GET /api/test/db` - Test database connection (dev only)
+**Total**: 42 production endpoints + 5 test endpoints
 
-## 🔒 Authentication
+See [API_DOCS.md](API_DOCS.md) for complete documentation.
 
-All protected routes require JWT token in header:
+---
 
+## 🧪 Testing
+
+### Automated Test Suite
+
+```powershell
+.\test-complete.ps1
 ```
-Authorization: Bearer <your_jwt_token>
-```
 
-## 🧪 Testing the API
+Tests 16 features:
+- ✅ System health (3 tests)
+- ✅ AI services (2 tests)
+- ✅ Authentication (3 tests)
+- ✅ Task management (3 tests)
+- ✅ Search & statistics (3 tests)
+- ✅ User profiles (2 tests)
 
-### 1. Health Check
+### Manual Testing
+
 ```bash
+# Health check
 curl http://localhost:5000/health
-```
 
-### 2. Send OTP
-```bash
-curl -X POST http://localhost:5000/api/auth/send-otp \
+# Test AI classification
+curl -X POST http://localhost:5000/api/test/ai-classification \
   -H "Content-Type: application/json" \
-  -d '{"phone": "+919876543210", "role": "customer"}'
+  -d '{"task_description": "AC not cooling", "location": "Mumbai"}'
 ```
 
-### 3. Verify OTP
-```bash
-curl -X POST http://localhost:5000/api/auth/verify-otp \
-  -H "Content-Type: application/json" \
-  -d '{"phone": "+919876543210", "otp": "123456"}'
-```
+---
 
-### 4. Create Task
-```bash
-curl -X POST http://localhost:5000/api/tasks \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "task_description": "Kitchen tap is leaking from base",
-    "location": {
-      "lat": 19.0760,
-      "lng": 72.8777,
-      "address": "Andheri, Mumbai"
-    }
-  }'
-```
+## 🔑 Getting API Keys
 
-## 📚 Documentation
+### Google Gemini (Free)
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create API Key
+3. Add to `.env` as `GEMINI_API_KEY`
 
-For detailed API documentation, see [API_DOCS.md](API_DOCS.md)
+### Supabase (Free)
+1. Create project at [Supabase](https://supabase.com)
+2. Go to Settings → API
+3. Copy URL and Service Role Key
+4. Add to `.env`
 
-## 🏗️ Project Structure
+### Twilio (Free Trial)
+1. Sign up at [Twilio](https://www.twilio.com/try-twilio)
+2. Get credentials from Console
+3. Add to `.env` (optional)
+
+---
+
+## 📁 Project Structure
 
 ```
 raahi-api/
 ├── src/
-│   ├── config/          # Database & AI configuration
-│   ├── controllers/     # Request handlers
-│   ├── middleware/      # Auth, error handling
-│   ├── routes/          # API routes
-│   ├── services/        # AI & SMS services
-│   ├── utils/           # Logger, response helpers
-│   └── server.js        # Express app entry point
+│   ├── config/           # Database & AI configuration
+│   │   ├── database.js   # Supabase client
+│   │   └── gemini.js     # Google Gemini AI
+│   ├── controllers/      # Request handlers
+│   │   ├── auth.controller.js
+│   │   ├── task.controller.js
+│   │   ├── bid.controller.js
+│   │   ├── user.controller.js
+│   │   ├── booking.controller.js
+│   │   ├── review.controller.js
+│   │   └── search.controller.js
+│   ├── middleware/       # Auth & error handling
+│   │   ├── auth.middleware.js
+│   │   └── errorHandler.js
+│   ├── routes/           # API routes
+│   │   ├── auth.routes.js
+│   │   ├── task.routes.js
+│   │   ├── bid.routes.js
+│   │   ├── user.routes.js
+│   │   ├── booking.routes.js
+│   │   ├── review.routes.js
+│   │   └── search.routes.js
+│   ├── services/         # Business logic
+│   │   ├── gemini.service.js
+│   │   ├── taskClassification.service.js
+│   │   ├── priceEstimation.service.js
+│   │   ├── bidAnalysis.service.js
+│   │   └── sms.service.js
+│   ├── utils/            # Helpers
+│   │   ├── logger.js
+│   │   └── response.js
+│   └── server.js         # Express app
 ├── database/
-│   └── migration.sql    # Database schema
-├── .env.example         # Environment template
-├── package.json
-└── README.md
+│   └── migration.sql     # Database schema
+├── logs/                 # Application logs
+├── test-complete.ps1     # Full test suite
+├── .env.example          # Environment template
+└── README.md             # This file
 ```
-
-## 🔧 Development
-
-### Run with Nodemon
-```bash
-npm run dev
-```
-
-### Check Logs
-Logs are stored in `logs/` directory:
-- `combined.log` - All logs
-- `error.log` - Error logs only
-
-## 🌐 Deployment
-
-### Environment Variables
-Ensure all production environment variables are set:
-- Use strong `JWT_SECRET` (min 32 characters)
-- Set `NODE_ENV=production`
-- Configure actual Twilio and Gemini API keys
-- Use production Supabase credentials
-
-### Production Checklist
-- [ ] All environment variables configured
-- [ ] Database migration run successfully
-- [ ] SSL/TLS enabled
-- [ ] Rate limiting configured
-- [ ] Logging and monitoring setup
-- [ ] Error tracking (e.g., Sentry) integrated
-
-## 📞 Support
-
-For issues or questions, please check:
-1. API documentation in `API_DOCS.md`
-2. Database schema in `database/migration.sql`
-3. Example requests in documentation
-
-## 📄 License
-
-MIT License
 
 ---
 
-Built with ♥ for RAAHI Platform
+## 🚀 Deployment
+
+### Environment Variables
+
+For production, ensure:
+- `NODE_ENV=production`
+- Strong `JWT_SECRET` (32+ characters)
+- Valid production URLs
+- Real Twilio credentials for SMS
+
+### Platform Recommendations
+
+- **Backend**: Railway, Render, Heroku, AWS
+- **Database**: Supabase (included), or PostgreSQL
+- **Domain**: Cloudflare for DNS + DDoS protection
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Code of Conduct
+- Development workflow
+- Pull request process
+- Coding standards
+
+---
+
+## 📊 Project Stats
+
+- **Lines of Code**: 3,500+
+- **API Endpoints**: 42 production + 5 test
+- **Database Tables**: 7
+- **Dependencies**: 190 packages
+- **Test Coverage**: 16 automated tests
+- **AI Services**: 3 (classification, pricing, bid analysis)
+- **SMS Templates**: 10+
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Server won't start**
+- Check Node.js version: `node -v` (need v18+)
+- Verify `.env` file exists and has all required variables
+- Check logs in `logs/error.log`
+
+**Database errors**
+- Ensure migration script ran successfully
+- Verify Supabase credentials in `.env`
+- Check Supabase dashboard for connection errors
+
+**AI not working**
+- Verify Gemini API key is valid
+- Check quota limits on Google AI Studio
+- Model `gemini-2.5-flash-lite` must be available
+
+**SMS not sending**
+- Check Twilio credentials
+- Verify phone number is verified (trial accounts)
+- Check Twilio balance for paid accounts
+- In development, OTPs log to console by default
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 💖 Acknowledgments
+
+- Google Gemini for AI capabilities
+- Supabase for database infrastructure
+- Twilio for SMS services
+- Open source community for amazing packages
+
+---
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/raahi-api/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/raahi-api/discussions)
+- **Email**: your.email@example.com
+
+---
+
+## 🎯 What's Next?
+
+- [ ] Build frontend (React/Next.js)
+- [ ] Add payment gateway integration
+- [ ] Implement real-time chat
+- [ ] Add push notifications
+- [ ] Build mobile app
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the RAAHI Platform**
+
+[⭐ Star this repo](https://github.com/YOUR_USERNAME/raahi-api) • [🐛 Report Bug](https://github.com/YOUR_USERNAME/raahi-api/issues) • [💡 Request Feature](https://github.com/YOUR_USERNAME/raahi-api/issues)
+
+</div>

@@ -64,6 +64,7 @@ app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/bookings', require('./routes/booking.routes'));
 app.use('/api/reviews', require('./routes/review.routes'));
 app.use('/api/search', require('./routes/search.routes'));
+app.use('/api/ai', require('./routes/ai.routes')); // AI recommendation services
 
 // Test routes (development only)
 if (process.env.NODE_ENV === 'development') {
