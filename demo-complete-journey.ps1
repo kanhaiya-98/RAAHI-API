@@ -88,14 +88,15 @@ try {
     $taskId = $task.id
     
     Write-Host "SUCCESS - Task created with AI intelligence!" -ForegroundColor Green
+    
     Write-Host "`nAI CLASSIFICATION:" -ForegroundColor Cyan
-    Write-Host "  Category: $($task.ai_service_category)" -ForegroundColor White
-    Write-Host "  Issue: $($task.ai_issue_type)" -ForegroundColor White
-    Write-Host "  Complexity: $($task.ai_complexity)" -ForegroundColor White
-    Write-Host "  Urgency: $($task.ai_urgency)" -ForegroundColor White
+    Write-Host "  Category: $($task.ai_classification.service_category)" -ForegroundColor White
+    Write-Host "  Issue: $($task.ai_classification.issue_type)" -ForegroundColor White
+    Write-Host "  Complexity: $($task.ai_classification.complexity)" -ForegroundColor White
+    Write-Host "  Urgency: $($task.ai_classification.urgency)" -ForegroundColor White
     
     Write-Host "`nAI PRICE ESTIMATION:" -ForegroundColor Cyan
-    Write-Host "  Range: Rs $($task.ai_price_min) - Rs $($task.ai_price_max)" -ForegroundColor White
+    Write-Host "  Range: Rs $($task.price_estimate.min) - Rs $($task.price_estimate.max)" -ForegroundColor White
     Write-Host "  Location: Mumbai (1.2x adjustment applied)" -ForegroundColor Gray
     Write-Host "`nTask ID: $taskId`n" -ForegroundColor Gray
 } catch {
