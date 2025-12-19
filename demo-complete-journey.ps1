@@ -12,7 +12,7 @@ Write-Host "============================================`n" -ForegroundColor Cya
 
 $API_BASE = "http://localhost:5000"
 $CUSTOMER_PHONE = "+919326650454"
-$PROVIDER_PHONE = "+919876543210"
+$PROVIDER_PHONE = "+919326650454"
 
 # ====================================================================
 # PHASE 1: CUSTOMER AUTHENTICATION
