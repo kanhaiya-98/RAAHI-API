@@ -62,7 +62,7 @@
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/raahi-api.git
+git clone https://github.com/kanhaiya-98/raahi-api.git
 cd raahi-api
 npm install
 ```
@@ -358,14 +358,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Supabase for database infrastructure
 - Twilio for SMS services
 - Open source community for amazing packages
-
----
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/raahi-api/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/raahi-api/discussions)
-- **Email**: your.email@example.com
 
 ---
 
